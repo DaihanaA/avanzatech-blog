@@ -1,0 +1,24 @@
+<nav class="navbar">
+  <div class="nav-brand">
+    <a routerLink="/home" class="brand-link">Avanzatech Blog</a>
+  </div>
+  <ul class="nav-links">
+    <li *ngIf="!(isLoggedIn$ | async) || false">
+      <a routerLink="/register" routerLinkActive="active" ariaCurrentWhenActive="page">Register</a>
+    </li>
+    <li *ngIf="!(isLoggedIn$ | async) || false">
+      <a routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a>
+    </li>
+
+    <!-- Contenedor para el nombre de usuario y el botón Logout -->
+    <li *ngIf="(isLoggedIn$ | async) || false">
+      <div class="nav-user-container">
+        <span *ngIf="username" class="nav-user">👤 Bienvenido, {{ username }}</span>
+        <button (click)="logout()">Logout</button>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+<!-- Renderiza la vista de la ruta seleccionada -->
+<router-outlet></router-outlet>

@@ -1,0 +1,101 @@
+/* Estilos generales del formulario */
+.form-container {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+/* Título del formulario */
+.form-container h2 {
+  text-align: center;
+  color: #333;
+}
+
+/* Agrupar los campos */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Etiquetas de los campos */
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* Inputs y selects */
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Ajuste de altura para textarea */
+.form-group textarea {
+  resize: vertical;
+}
+
+/* Estilos para los permisos (fieldset) */
+.permissions-group {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Estilo del título dentro del fieldset */
+.permissions-group legend {
+  font-weight: bold;
+  padding: 0 10px;
+  color: #444;
+}
+
+/* Botón */
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Botón deshabilitado */
+.btn-primary:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.btn-secondary {
+  background-color: #6c757d; /* Gris */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px; /* Espacio entre botones */
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268; /* Un poco más oscuro al pasar el mouse */
+}

@@ -1,0 +1,68 @@
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="form-container">
+  <h2>📝 Crear Publicación</h2>
+
+  <!-- Título -->
+  <div class="form-group">
+    <label for="title">Título:</label>
+    <input id="title" type="text" formControlName="title" required />
+  </div>
+
+  <!-- Contenido -->
+  <div class="form-group">
+    <label for="content">Contenido:</label>
+    <textarea id="content" formControlName="content" required rows="4"></textarea>
+  </div>
+
+  <!-- Permisos -->
+  <fieldset formGroupName="categorias" class="permissions-group">
+    <legend>🔒 Permisos</legend>
+
+    <!-- Público -->
+    <div class="form-group">
+      <label for="public_permission">Público:</label>
+      <select id="public_permission" formControlName="public_permission" (change)="validatePermissions()">
+        <option value="READ">Leer</option>
+        <option value="NONE">Ninguno</option>
+      </select>
+    </div>
+
+    <!-- Autenticado -->
+    <div class="form-group">
+      <label for="authenticated_permission">Autenticado:</label>
+      <select id="authenticated_permission" formControlName="authenticated_permission" (change)="validatePermissions()">
+        <option *ngFor="let option of permissionsOptions" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Equipo -->
+    <div class="form-group">
+      <label for="team_permission">Equipo:</label>
+      <select id="team_permission" formControlName="team_permission" (change)="validatePermissions()">
+        <option *ngFor="let option of permissionsOptions" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Autor (solo lectura) -->
+    <div class="form-group">
+      <label for="author_permission">Autor:</label>
+      <input id="author_permission" type="text" formControlName="author_permission" readonly />
+    </div>
+
+    <!-- ⚠️ Mensaje de error de permisos -->
+    <div *ngIf="permissionError" class="error-message">
+      ⚠️ {{ permissionError }}
+    </div>
+  </fieldset>
+
+  <!-- Botones -->
+  <div class="button-group">
+    <button type="submit" class="btn-primary" [disabled]="postForm.invalid || permissionError">
+      💾 Crear Post
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="cancel()">❌ Cancelar</button>
+  </div>
+</form>

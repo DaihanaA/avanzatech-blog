@@ -1,0 +1,68 @@
+<div *ngIf="post">
+  <h1>{{ post.title }}</h1>
+
+  <!-- 📝 Información del post -->
+<!-- 📝 Información del post en una sola línea -->
+<div class="post-meta">
+  <span><strong>Autor:</strong> {{ author }}</span>
+  <span><strong>Equipo:</strong> {{ team }}</span>
+  <span><strong>Publicado el:</strong> {{ timestamp }}</span>
+</div>
+
+<div class="post-content-box">
+  <p>{{ post.content }}</p>
+</div>
+
+
+  <!-- Sección de Likes -->
+  <p class="likes-count"><strong>👍 Likes:</strong> {{ likesCount }}</p>
+
+  <hr>
+
+
+  <h3>Comentarios:</h3>
+  <ul *ngIf="comments.length; else noComments">
+    <li *ngFor="let comment of comments">
+
+      <strong>{{ comment.user }}</strong>: {{ comment.content }}
+      <br>
+      <small>{{ comment.timestamp }}</small>
+    </li>
+  </ul>
+
+  <!-- Botones de paginación -->
+<button (click)="prevPage()" [disabled]="!prevPageUrl">← Anterior</button>
+<button (click)="nextPage()" [disabled]="!nextPageUrl">Siguiente →</button>
+
+<!-- <p>Página {{ currentPage }}</p> -->
+
+  <ng-template #noComments>
+    <p class="no-comments" *ngIf="comments.length === 0">No hay comentarios aún.</p>
+  </ng-template>
+
+ <!-- Caja de comentarios (Solo si el usuario está autenticado) -->
+<div *ngIf="isAuthenticated" class="comment-box">
+  <textarea [(ngModel)]="newComment"
+            placeholder="Escribe un comentario..."
+            class="comment-input"></textarea>
+
+  <div class="comment-buttons">
+    <button (click)="addComment()"
+            [disabled]="!newComment.trim()"
+            class="comment-button">
+      💬 Comentar
+    </button>
+
+    <button (click)="cancelComment()"
+            class="cancel-button">
+      ❌ Cancelar
+    </button>
+  </div>
+</div>
+
+<!-- Mensaje para usuarios no autenticados -->
+<p *ngIf="!isAuthenticated" class="auth-warning">
+  ⚠️ Debes <a routerLink="/login">iniciar sesión</a> para comentar.
+</p>
+
+

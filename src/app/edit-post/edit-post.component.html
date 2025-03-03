@@ -1,0 +1,57 @@
+<form (ngSubmit)="updatePost()" class="form-container">
+  <h2>✍ Editar Publicación</h2>
+
+  <!-- Título -->
+  <div class="form-group">
+    <label for="title">Título:</label>
+    <input type="text" id="title" [(ngModel)]="post.title" name="title" required />
+  </div>
+
+  <!-- Contenido -->
+  <div class="form-group">
+    <label for="content">Contenido:</label>
+    <textarea id="content" [(ngModel)]="post.content" name="content" required rows="4"></textarea>
+  </div>
+
+  <!-- Permiso del Equipo -->
+  <div class="form-group">
+    <label for="teamPermission">Permiso del Equipo:</label>
+    <select id="teamPermission" [(ngModel)]="post.team_permission" name="team_permission" (change)="validatePermissions()">
+      <option value="NONE">Ninguno</option>
+      <option value="READ">Leer</option>
+      <option value="READ_EDIT">Leer y Editar</option>
+    </select>
+  </div>
+
+  <!-- Permiso Autenticado -->
+  <div class="form-group">
+    <label for="authenticatedPermission">Permiso Autenticado:</label>
+    <select id="authenticatedPermission" [(ngModel)]="post.authenticated_permission" name="authenticated_permission" (change)="validatePermissions()">
+      <option value="NONE">Ninguno</option>
+      <option value="READ">Leer</option>
+      <option value="READ_EDIT">Leer y Editar</option>
+    </select>
+  </div>
+
+  <!-- Permiso Público -->
+  <div class="form-group">
+    <label for="publicPermission">Permiso Público:</label>
+    <select id="publicPermission" [(ngModel)]="post.public_permission" name="public_permission" (change)="validatePermissions()">
+      <option value="NONE">Ninguno</option>
+      <option value="READ">Leer</option>
+    </select>
+  </div>
+
+  <!-- 🔴 Mensaje de Error si hay problemas con los permisos -->
+  <div *ngIf="permissionError" class="error-message">
+    ⚠ {{ permissionError }}
+  </div>
+
+  <!-- Botones -->
+  <div class="button-group">
+    <button type="submit" class="btn-primary" [disabled]="!post.title || !post.content || permissionError">
+      💾 Actualizar Post
+    </button>
+    <button type="button" class="btn-secondary" (click)="cancelEdit()">❌ Cancelar</button>
+  </div>
+</form>

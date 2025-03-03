@@ -1,0 +1,96 @@
+<div class="home-container">
+  <h1>Blog Posts</h1>
+
+  <!-- Botón para crear un nuevo post (solo usuarios autenticados) -->
+  <button *ngIf="isAuthenticated" routerLink="/create-post" class="btn-new-post">
+    ➕ Crear Nuevo Post
+  </button>
+
+  <!-- Mostrar posts con paginación -->
+  <ng-container *ngFor="let post of posts | paginate: { itemsPerPage: 10, currentPage: currentPage, totalItems: totalItems }">
+    <div class="post-card">
+      <h2>{{ post.title }}</h2>
+      <p class="meta">
+        Por: <strong>{{ post.author }}</strong> |
+        Equipo: {{ post.team || 'Ninguno' }} |
+        Creado: {{ post.timestamp | date:'short' }}
+      </p>
+      <p>{{ post.excerpt }}</p>
+
+      <button *ngIf="post.content.length > post.excerpt.length"
+        [routerLink]="'/posts/' + post.id"
+        class="btn-link">
+  🔍 Ver detalles
+</button>
+
+
+      <!-- 🔥 Mostrar permisos -->
+      <div class="permissions">
+        <span *ngIf="post.public_permission !== 'NONE'" class="badge-public">🔓 Público</span>
+        <span *ngIf="post.authenticated_permission !== 'NONE'" class="badge-authenticated">
+          🔒 Para usuarios autenticados
+        </span>
+        <span *ngIf="post.team_permission !== 'NONE'" class="badge-team">👥 Para el equipo</span>
+      </div>
+
+            <!-- Contador de likes -->
+            <span class="stats-counter"
+                  (click)="showLikes(post)"
+
+
+                  >
+              {{ post.likes_count }} {{ post.likes_count === 1 ? 'Like' : 'Likes' }}
+            </span>
+
+        <!-- Lista de usuarios que dieron like -->
+<ul *ngIf="showLikesForPostId === post.id" class="likes-list">
+  <li *ngFor="let like of selectedPostLikes">
+    {{ like.user }}
+  </li>
+
+  <!-- Controles de paginación con botones -->
+  <li class="pagination-buttons">
+    <button (click)="previousLikesPage(post)" [disabled]="selectedPostLikesPage === 1">
+      ⬅️ Anterior
+    </button>
+
+    <span>Página {{ selectedPostLikesPage }} de {{ totalLikesPages }}</span>
+
+    <button (click)="nextLikesPage(post)" [disabled]="selectedPostLikesPage >= totalLikesPages">
+      Siguiente ➡️
+    </button>
+  </li>
+</ul>
+
+<span *ngIf="post?.comment_count !== undefined" class="stats-counter link" (click)="navigateToPost(post.id)">
+  {{ post.comment_count }} Comentarios
+</span>
+
+
+      <button *ngIf="isAuthenticated" (click)="toggleLike(post)" class="btn-like">
+        {{ getLikeButtonText(post) }}
+      </button>
+
+      <button *ngIf="isAuthenticated" class="btn-comment" [routerLink]="'/posts/' + post.id">
+        💬 Agregar Comentario
+      </button>
+
+      <div *ngIf="canEditOrDelete(post)">
+        <button (click)="editPost(post)">✏️ Editar</button>
+        <button (click)="deletePost(post)">🗑️ Eliminar</button>
+      </div>
+
+
+
+    </div>
+  </ng-container>
+
+  <!-- Controles de paginación de los posts -->
+  <pagination-controls
+      (pageBoundsCorrection)="pageChanged($event)"
+      [responsive]="true"
+      [maxSize]="10"
+      [directionLinks]="true"
+      (pageChange)="pageChanged($event)">
+  </pagination-controls>
+</div>

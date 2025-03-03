@@ -1,0 +1,34 @@
+<div class="login-container">
+  <div class="login-box">
+    <h2>Iniciar sesión</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+
+      <label for="username">Correo electrónico:</label>
+      <input id="username" formControlName="username" type="email" placeholder="Correo" (blur)="validateField('username')" />
+      <div *ngIf="loginForm.controls['username'].touched && loginForm.controls['username'].invalid" class="error-message">
+        <p *ngIf="loginForm.controls['username'].errors?.['required']">El correo es obligatorio.</p>
+        <p *ngIf="loginForm.controls['username'].errors?.['email']">El formato del correo no es válido.</p>
+      </div>
+
+      <label for="password">Contraseña:</label>
+      <div class="password-container">
+        <input id="password" formControlName="password" [type]="passwordFieldType" placeholder="Contraseña" (blur)="validateField('password')" />
+        <button type="button" (click)="togglePasswordVisibility()">
+          {{ passwordFieldType === 'password' ? '👁️‍🗨️' : '👁️' }}
+        </button>
+      </div>
+      <div *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].invalid" class="error-message">
+        <p *ngIf="loginForm.controls['password'].errors?.['required']">La contraseña es obligatoria.</p>
+        <p *ngIf="loginForm.controls['password'].errors?.['minlength']">Debe tener al menos 8 caracteres.</p>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid">Iniciar sesión</button>
+      <button type="button" class="btn-cancel" (click)="onCancel()">Cancelar</button>
+      <p>¿No tienes una cuenta? <a routerLink="/register" class="register-link">Regístrate aquí</a></p>
+    </form>
+  </div>
+</div>

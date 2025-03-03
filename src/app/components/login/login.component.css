@@ -1,0 +1,253 @@
+/* 📌 Contenedor principal */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  padding: 20px; /* Agrega espacio alrededor */
+}
+
+/* 🏠 Caja del formulario */
+.login-box {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 90%;
+  max-width: 400px; /* Limita el ancho */
+}
+
+/* 📱 Diseño responsivo */
+@media (max-width: 480px) {
+  .login-box {
+    width: 100%;
+    padding: 20px;
+  }
+}
+
+/* 📝 Formulario */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espaciado uniforme */
+}
+
+/* 🎯 Estilo uniforme para los inputs */
+.login-form input,
+.password-container input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+  box-sizing: border-box; /* Asegura que padding y border no cambien el tamaño */
+}
+
+/* 📌 Contenedor del campo de contraseña */
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Asegurar que el input de la contraseña tenga el mismo tamaño */
+.password-container input {
+  padding-right: 40px; /* Espacio suficiente para el botón del ojo */
+}
+
+/* 🔑 Botón del ojo */
+.password-container button {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #555;
+  padding: 0;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🔥 Hover en el botón del ojo */
+.password-container button:hover {
+  color: #4facfe;
+}
+
+/* 📌 Contenedor de botones */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Botón de inicio de sesión */
+button[type="submit"] {
+  background: #4facfe;
+  color: white;
+  font-weight: bold;
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+/* Botón de cancelar */
+.btn-cancel {
+  background: #ccc;
+  color: black;
+  font-weight: bold;
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+/* 🔥 Efecto hover */
+button:not(.password-toggle):hover {
+  opacity: 0.9;
+}
+/* 📌 Contenedor principal */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  padding: 20px; /* Agrega espacio alrededor */
+}
+
+/* 🏠 Caja del formulario */
+.login-box {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 90%;
+  max-width: 400px; /* Limita el ancho */
+}
+
+/* 📱 Diseño responsivo */
+@media (max-width: 480px) {
+  .login-box {
+    width: 100%;
+    padding: 20px;
+  }
+}
+
+/* 📝 Formulario */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espaciado uniforme */
+}
+
+/* 🎯 Estilo uniforme para los inputs */
+.login-form input,
+.password-container input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+  box-sizing: border-box; /* Asegura que padding y border no cambien el tamaño */
+}
+
+/* 📌 Contenedor del campo de contraseña */
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Asegurar que el input de la contraseña tenga el mismo tamaño */
+.password-container input {
+  padding-right: 40px; /* Espacio suficiente para el botón del ojo */
+}
+
+/* 🔑 Botón del ojo */
+.password-container button {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #555;
+  padding: 0;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🔥 Hover en el botón del ojo */
+.password-container button:hover {
+  color: #4facfe;
+}
+
+/* 📌 Contenedor de botones */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Botón de inicio de sesión */
+button[type="submit"] {
+  background: #4facfe;
+  color: white;
+  font-weight: bold;
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+/* Botón de cancelar */
+.btn-cancel {
+  background: #ccc;
+  color: black;
+  font-weight: bold;
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+/* 🔥 Efecto hover */
+button:not(.password-toggle):hover {
+  opacity: 0.9;
+}
+.error-message {
+  color: #d9534f;
+  font-size: 0.9rem; /* Ajusta el tamaño de la fuente */
+  margin-top: 5px;
+  padding: 5px;
+  text-align: center; /* Centra el texto */
+  background: #f8d7da; /* Fondo más claro para resaltar el error */
+  border: 1px solid #d9534f; /* Borde rojo para mayor visibilidad */
+  border-radius: 5px;
+}
+
