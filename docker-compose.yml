@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend  # Asegúrate de que la ruta sea correcta
+      dockerfile: Dockerfile  # Asegúrate de que tengas un Dockerfile en la carpeta de frontend
+    container_name: angular-frontend
+    ports:
+      - "4200:4200"  # Exponiendo el puerto 4200, que es el predeterminado de ng serve
+    environment:
+      - NODE_ENV=development
+    command: ["ng", "serve", "--host", "0.0.0.0"]  # El comando para arrancar la app Angular
