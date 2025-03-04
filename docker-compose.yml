@@ -3,7 +3,7 @@ version: '3.8'
 services:
   frontend:
     build:
-      context: ./frontend  # Asegúrate de que la ruta sea correcta
+      context: .  # Asegúrate de que la ruta sea correcta
       dockerfile: Dockerfile  # Asegúrate de que tengas un Dockerfile en la carpeta de frontend
     container_name: angular-frontend
     ports:

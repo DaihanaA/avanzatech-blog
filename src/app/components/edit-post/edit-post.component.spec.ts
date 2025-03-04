@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { EditPostComponent } from './edit-post.component';
-import { PostService } from '../services/post.service';
+import { PostService } from '../../services/post.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import Swal, { SweetAlertResult } from 'sweetalert2';
-import { Post } from '../models/post.model';
+import { Post } from '../../models/post.model';
 import { FormsModule } from '@angular/forms';
 
 

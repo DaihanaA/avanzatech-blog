@@ -5,7 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { PostDetailComponent } from './components/post-detail/post-detail.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
-import { EditPostComponent } from './edit-post/edit-post.component';
+import { EditPostComponent } from './components/edit-post/edit-post.component';
 
 
 export const routes: Routes = [
@@ -20,7 +20,7 @@ export const routes: Routes = [
   },
   {
     path: 'edit-post/:id',
-    loadComponent: () => import('./edit-post/edit-post.component').then(m => m.EditPostComponent),
+    loadComponent: () => import('./components/edit-post/edit-post.component').then(m => m.EditPostComponent),
     data: { renderMode: 'server' },
 
   },
