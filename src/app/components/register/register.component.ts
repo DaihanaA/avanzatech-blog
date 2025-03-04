@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +17,8 @@ import { RouterModule } from '@angular/router';
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   errorMessage: string = ''; // Variable para almacenar el mensaje de error
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -39,36 +42,67 @@ export class RegisterComponent implements OnInit {
     return null;
   }
 
+  togglePasswordVisibility(field: 'password' | 'confirm_password') {
+    if (field === 'password') {
+      this.showPassword = !this.showPassword;
+    } else {
+      this.showConfirmPassword = !this.showConfirmPassword;
+    }
+  }
+
   register() {
     if (this.registerForm.valid) {
       const userData = this.registerForm.value;
       this.authService.registerUser(userData).subscribe({
         next: () => {
-          this.errorMessage = ''; // Limpiar errores generales
-          this.router.navigate(['/login']);
+          this.errorMessage = '';
+
+          // ✅ Mostrar SweetAlert de éxito
+          Swal.fire({
+            icon: 'success',
+            title: '¡Registro exitoso!',
+            text: 'Serás redirigido a la página de inicio de sesión.',
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false
+          }).then(() => {
+            this.router.navigate(['/login']);
+          });
+
         },
         error: (error) => {
           console.error('Detalles del error recibido:', error);
 
           if (error.status === 400 && error.error) {
             const usernameControl = this.registerForm.controls['username'];
-
             if (error.error.username && Array.isArray(error.error.username)) {
-              // 🔹 Reemplazar mensaje en inglés por español
               const errorMessage = error.error.username[0] === "A user with that username already exists."
                 ? "Este correo ya se encuentra registrado."
                 : error.error.username[0];
 
-              // 🔹 Establecer el error en el campo del formulario
               usernameControl.setErrors({ usernameTaken: errorMessage });
+
+              // ✅ Mostrar error con SweetAlert
+              Swal.fire({
+                icon: 'error',
+                title: 'Error en el registro',
+                text: errorMessage
+              });
+
             }
           } else {
             this.errorMessage = 'Error inesperado. Intenta nuevamente.';
+            Swal.fire({
+              icon: 'error',
+              title: 'Error inesperado',
+              text: 'Por favor, intenta nuevamente.'
+            });
           }
         }
       });
     }
   }
+
 
 
 

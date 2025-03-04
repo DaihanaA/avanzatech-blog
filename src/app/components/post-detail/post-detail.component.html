@@ -9,9 +9,10 @@
   <span><strong>Publicado el:</strong> {{ timestamp }}</span>
 </div>
 
-<div class="post-content-box">
-  <p>{{ post.content }}</p>
-</div>
+<div class="post-content-box" [innerHTML]="post.content"></div>
+
+
+ 
 
 
   <!-- Sección de Likes -->
@@ -19,16 +20,15 @@
 
   <hr>
 
-
   <h3>Comentarios:</h3>
   <ul *ngIf="comments.length; else noComments">
     <li *ngFor="let comment of comments">
-
-      <strong>{{ comment.user }}</strong>: {{ comment.content }}
-      <br>
+      <strong>{{ comment.user }}</strong>:
+      <p class="comment-content">{{ comment.content }}</p>
       <small>{{ comment.timestamp }}</small>
     </li>
   </ul>
+
 
   <!-- Botones de paginación -->
 <button (click)="prevPage()" [disabled]="!prevPageUrl">← Anterior</button>

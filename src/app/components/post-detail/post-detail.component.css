@@ -148,3 +148,7 @@ button:disabled {
 button:hover:not(:disabled) {
   background: #0056b3;
 }
+
+.comment-content {
+  white-space: pre-line; /* ✅ Respeta los saltos de línea */
+}

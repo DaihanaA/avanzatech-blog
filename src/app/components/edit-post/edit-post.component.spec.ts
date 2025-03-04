@@ -301,11 +301,20 @@ describe('EditPostComponent', () => {
   });
 
   it('debe mostrar el contenido en el área de texto', async () => {
-    await fixture.whenStable();
-    const textarea = fixture.nativeElement.querySelector('#content');
-    expect(textarea).toBeTruthy();
-    expect(textarea.value).toBe('Contenido');
+    component.post = { title: 'Título', content: 'Contenido' }; // ✅ Definir el contenido del post
+    fixture.detectChanges(); // 🚀 Forzar actualización de la vista
+
+    await fixture.whenStable(); // ⏳ Esperar que Angular actualice el DOM
+    await new Promise(resolve => setTimeout(resolve, 100)); // 🕒 Esperar un pequeño delay
+
+    const quillEditor = fixture.nativeElement.querySelector('quill-editor');
+    expect(quillEditor).toBeTruthy(); // ✅ Verificar que el editor existe
+
+    const editorDiv = fixture.nativeElement.querySelector('.ql-editor');
+    expect(editorDiv).toBeTruthy(); // ✅ Asegurar que `.ql-editor` se ha renderizado
+    expect(editorDiv.innerHTML.trim()).toContain('Contenido'); // ✅ Verificar contenido
   });
+
 
   it('debe mostrar el permiso público seleccionado correctamente', async () => {
     await fixture.whenStable();

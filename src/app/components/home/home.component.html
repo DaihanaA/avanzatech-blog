@@ -15,7 +15,10 @@
         Equipo: {{ post.team || 'Ninguno' }} |
         Creado: {{ post.timestamp | date:'short' }}
       </p>
-      <p>{{ post.excerpt }}</p>
+      <div  [innerHTML]="post.excerpt">
+     
+      </div>
+
 
       <button *ngIf="post.content.length > post.excerpt.length"
         [routerLink]="'/posts/' + post.id"

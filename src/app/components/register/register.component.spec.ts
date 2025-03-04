@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
 import { RegisterComponent } from './register.component';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { of, throwError } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NavigationEnd } from '@angular/router';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -53,6 +54,7 @@ describe('RegisterComponent', () => {
     expect(component).toBeTruthy();
   });
 
+
   it('debería inicializar el formulario correctamente', () => {
     expect(component.registerForm).toBeDefined();
 
@@ -82,6 +84,32 @@ describe('RegisterComponent', () => {
     expect(authServiceMock.registerUser).toHaveBeenCalledOnceWith(formData);
   });
 
+  it('debería navegar al login tras un registro exitoso', fakeAsync(() => {
+    spyOn(Swal, 'fire').and.returnValue(Promise.resolve({ isConfirmed: true }) as Promise<SweetAlertResult<any>>);
+
+ // Simular que SweetAlert se cierra
+
+    // Simulamos respuesta exitosa de la API
+    authServiceMock.registerUser.and.returnValue(of({}));
+
+    // Llenamos el formulario con datos válidos
+    component.registerForm.setValue({
+      username: 'test@example.com',
+      password: 'password123',
+      confirm_password: 'password123'
+    });
+
+    // Llamamos a la función register
+    component.register();
+
+    // Esperamos a que SweetAlert termine
+    tick();
+
+    // Verificamos que se haya navegado al login
+    expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);
+  }));
+
+
   it('debería manejar error de usuario ya registrado', () => {
     authServiceMock.registerUser.and.returnValue(
       throwError(() => ({
@@ -103,17 +131,6 @@ describe('RegisterComponent', () => {
     });
   });
 
-  it('debería navegar a login después de registro exitoso', () => {
-    component.registerForm.setValue({
-      username: 'test@example.com',
-      password: 'password123',
-      confirm_password: 'password123',
-    });
-
-    component.register();
-
-    expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);
-  });
 
   it('debería mostrar error si el correo tiene un formato incorrecto', () => {
     const usernameControl = component.registerForm.controls['username'];
@@ -177,19 +194,7 @@ describe('RegisterComponent', () => {
     // 🔹 Verificar que el mensaje es el esperado
     expect(errorMsg?.textContent?.trim()).toBe('Debe tener al menos 8 caracteres.');
   });
-  it('debería redirigir al login tras un registro exitoso', () => {
-    authServiceMock.registerUser.and.returnValue(of({}));
 
-    component.registerForm.setValue({
-      username: 'test@example.com',
-      password: 'password123',
-      confirm_password: 'password123',
-    });
-
-    component.register();
-
-    expect(routerMock.navigate).toHaveBeenCalledWith(['/login']);
-  });
   it('debería marcar los campos como requeridos si están vacíos', () => {
     component.registerForm.controls['username'].setValue('');
     component.registerForm.controls['password'].setValue('');
@@ -212,9 +217,6 @@ describe('RegisterComponent', () => {
 
     expect(usernameControl.valid).toBeTrue();
   });
-
-  
-
 
 
 

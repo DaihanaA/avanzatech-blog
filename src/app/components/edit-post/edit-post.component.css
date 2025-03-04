@@ -17,6 +17,9 @@
 
 /* Agrupar los campos */
 .form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   margin-bottom: 15px;
 }
 
@@ -28,26 +31,44 @@
   color: #555;
 }
 
-/* Campos de entrada y textarea */
+/* Campos de entrada, select y editor de texto */
 .form-group input,
 .form-group textarea,
-.form-group select {
+.form-group select,
+.quill-editor {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
+  box-sizing: border-box; /* Evita que el padding afecte el tamaño */
 }
 
-/* Espaciado en el textarea */
+/* Ajustar altura del textarea */
 .form-group textarea {
   resize: vertical;
+  min-height: 150px;
+}
+
+/* Estilos específicos para ngx-quill */
+::ng-deep .ql-container {
+  width: 100%;
+  min-height: 150px; /* Ajusta la altura del editor para coincidir con textarea */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+::ng-deep .ql-editor {
+  font-size: 16px;
+  padding: 10px;
+  min-height: 150px;
 }
 
 /* Grupo de botones */
 .button-group {
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 }
 
 /* Estilos del botón principal */
@@ -65,6 +86,12 @@
   background-color: #0056b3;
 }
 
+/* Botón deshabilitado */
+.btn-primary:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 /* Estilos del botón secundario */
 .btn-secondary {
   background-color: #6c757d;
@@ -78,4 +105,68 @@
 
 .btn-secondary:hover {
   background-color: #545b62;
+}
+
+/* Estilos para los permisos (fieldset) */
+.permissions-group {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Estilo del título dentro del fieldset */
+.permissions-group legend {
+  font-weight: bold;
+  padding: 0 10px;
+  color: #444;
+}
+
+/* Ajustar separación en el fieldset */
+.permissions-group .form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Alinear mejor las etiquetas y selects */
+.permissions-group label {
+  flex: 1;
+}
+
+.permissions-group select {
+  flex: 2;
+  margin-left: 10px;
+}
+
+/* Mensajes de error */
+.error-message {
+  color: #d9534f; /* Rojo */
+  font-size: 14px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.error-message::before {
+  content: "⚠️";
+  margin-right: 5px;
+}
+
+/* Adaptación para dispositivos pequeños */
+@media (max-width: 600px) {
+  .form-container {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .permissions-group .form-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .permissions-group select {
+    width: 100%;
+    margin-left: 0;
+  }
 }

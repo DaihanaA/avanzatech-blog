@@ -1,17 +1,29 @@
 <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="form-container">
   <h2>📝 Crear Publicación</h2>
 
-  <!-- Título -->
-  <div class="form-group">
-    <label for="title">Título:</label>
-    <input id="title" type="text" formControlName="title" required />
+<!-- Título -->
+<div class="form-group">
+  <label for="title">Título:</label>
+  <input id="title" type="text" formControlName="title" required />
+  <div *ngIf="postForm.get('title')?.invalid && postForm.get('title')?.touched" class="error-message">
+    ⚠️ El título es obligatorio.
   </div>
 
-  <!-- Contenido -->
-  <div class="form-group">
-    <label for="content">Contenido:</label>
-    <textarea id="content" formControlName="content" required rows="4"></textarea>
+</div>
+
+<!-- Contenido (Rich Text Editor) -->
+<div class="form-group">
+  <label for="content">Contenido:</label>
+  <quill-editor
+    formControlName="content"
+    [modules]="quillConfig">
+  </quill-editor>
+  <div *ngIf="postForm.get('content')?.invalid && postForm.get('content')?.touched" class="error-message">
+    ⚠️ El contenido es obligatorio.
   </div>
+
+</div>
+
 
   <!-- Permisos -->
   <fieldset formGroupName="categorias" class="permissions-group">
@@ -60,9 +72,11 @@
 
   <!-- Botones -->
   <div class="button-group">
-    <button type="submit" class="btn-primary" [disabled]="postForm.invalid || permissionError">
-      💾 Crear Post
-    </button>
+
+<!-- Botón deshabilitado si el formulario es inválido o hay errores -->
+<button type="submit" class="btn-primary" [disabled]="postForm.invalid || permissionError || titleError || contentError">
+  💾 Crear Post
+</button>
     <button type="button" class="btn btn-secondary" (click)="cancel()">❌ Cancelar</button>
   </div>
 </form>

@@ -28,20 +28,68 @@
   color: #555;
 }
 
-/* Inputs y selects */
+/* Inputs, selects y Quill */
 .form-group input,
 .form-group textarea,
-.form-group select {
+.form-group select,
+.form-group quill-editor {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
+  min-height: 40px; /* Asegura altura uniforme */
 }
 
 /* Ajuste de altura para textarea */
 .form-group textarea {
   resize: vertical;
+}
+
+/* Estilos específicos para Quill Editor */
+.quill-container {
+  width: 100%;
+}
+
+quill-editor {
+  width: 100%;
+  display: block;
+}
+
+::ng-deep .ql-container {
+  width: 100%;
+  min-height: 200px; /* Ajusta la altura mínima según necesites */
+}
+
+::ng-deep .ql-editor {
+  min-height: 200px;
+  font-size: 16px;
+  padding: 10px;
+}
+
+::ng-deep .ql-toolbar {
+  border-radius: 5px 5px 0 0;
+  background: #f8f9fa;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+::ng-deep .ql-container.ql-snow {
+  border-radius: 0 0 5px 5px;
+  border: 1px solid #ccc;
+  min-height: 150px;
+}
+
+::ng-deep .ql-toolbar.ql-snow {
+  border-bottom: 1px solid #ccc;
+}
+
+/* Resaltar inputs con error */
+.form-group input.ng-invalid.ng-touched,
+.form-group textarea.ng-invalid.ng-touched,
+.form-group select.ng-invalid.ng-touched {
+  border: 1px solid #d9534f;
+  background-color: #f8d7da;
 }
 
 /* Estilos para los permisos (fieldset) */
@@ -57,6 +105,37 @@
   font-weight: bold;
   padding: 0 10px;
   color: #444;
+}
+
+/* Ajustar separación en el fieldset */
+.permissions-group .form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Alinear mejor las etiquetas y selects */
+.permissions-group label {
+  flex: 1;
+}
+
+.permissions-group select {
+  flex: 2;
+  margin-left: 10px;
+}
+
+/* Mensajes de error */
+.error-message {
+  color: #d9534f; /* Rojo */
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+  align-items: center;
+}
+
+.error-message::before {
+  content: "⚠️";
+  margin-right: 5px;
 }
 
 /* Botón */
@@ -85,6 +164,7 @@
   background-color: #ccc;
   cursor: not-allowed;
 }
+
 .btn-secondary {
   background-color: #6c757d; /* Gris */
   color: white;
@@ -98,4 +178,22 @@
 
 .btn-secondary:hover {
   background-color: #5a6268; /* Un poco más oscuro al pasar el mouse */
+}
+
+/* Adaptación para dispositivos pequeños */
+@media (max-width: 600px) {
+  .form-container {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .permissions-group .form-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .permissions-group select {
+    width: 100%;
+    margin-left: 0;
+  }
 }

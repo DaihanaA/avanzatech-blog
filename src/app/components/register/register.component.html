@@ -14,25 +14,34 @@
         </p>
       </div>
 
-
+      <!-- Campo de Contraseña -->
       <label for="password">Contraseña:</label>
-      <input id="password" formControlName="password" type="password" />
+      <div class="password-container">
+        <input [type]="showPassword ? 'text' : 'password'" formControlName="password" id="password" />
+        <button type="button" (click)="togglePasswordVisibility('password')" class="toggle-password">
+          {{ showPassword ? '👁️‍🗨️' : '👁️' }}
+        </button>
+      </div>
 
       <div *ngIf="registerForm.controls['password'].touched && registerForm.controls['password'].invalid" class="error-message">
         <p *ngIf="registerForm.controls['password'].errors?.['required']">La contraseña es obligatoria.</p>
         <p *ngIf="registerForm.controls['password'].errors?.['minlength']">Debe tener al menos 8 caracteres.</p>
-        <p *ngIf="registerForm.controls['password'].errors?.['backendError']">
-          {{ registerForm.controls['password'].errors?.['backendError'] }}
-        </p>
       </div>
 
-
+      <!-- Campo de Confirmar Contraseña -->
       <label for="confirm_password">Confirmar contraseña:</label>
-      <input id="confirm_password" formControlName="confirm_password" type="password" (blur)="validateField('confirm_password')" />
+      <div class="password-container">
+        <input [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirm_password" id="confirm_password" />
+        <button type="button" (click)="togglePasswordVisibility('confirm_password')" class="toggle-password">
+          {{ showConfirmPassword ? '👁️‍🗨️' : '👁️' }}
+        </button>
+      </div>
+
       <div *ngIf="registerForm.controls['confirm_password'].touched && registerForm.controls['confirm_password'].invalid" class="error-message">
         <p *ngIf="registerForm.controls['confirm_password'].errors?.['required']">La confirmación de contraseña es obligatoria.</p>
         <p *ngIf="registerForm.controls['confirm_password'].errors?.['minlength']">Debe tener al menos 8 caracteres.</p>
       </div>
+
       <div *ngIf="registerForm.errors?.['mismatch']" class="error-message">
         <p>Las contraseñas no coinciden.</p>
       </div>

@@ -5,12 +5,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-crear-post',
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.css'],
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [CommonModule, ReactiveFormsModule, QuillModule]
 })
 export class CreatePostComponent implements OnInit {
   postForm!: FormGroup;
@@ -21,6 +22,17 @@ export class CreatePostComponent implements OnInit {
     { value: 'READ_EDIT', label: 'Leer y Editar' },
     { value: 'NONE', label: 'Ninguno' }
   ];
+  titleError: string | null = '';
+  contentError: string | null = '';
+
+  quillConfig = {
+    toolbar: [
+      ['bold', 'italic', 'underline'],  // Estilos básicos
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],  // Listas
+      [{ 'align': [] }],  // Alineación
+      ['link', 'blockquote', 'code-block'],  // Extras
+    ]
+  };
 
   constructor(private postService: PostService, private router: Router, private fb: FormBuilder) {}
 
@@ -32,8 +44,26 @@ export class CreatePostComponent implements OnInit {
         public_permission: ['READ', Validators.required],
         authenticated_permission: ['READ', Validators.required],
         team_permission: ['READ_EDIT', Validators.required],
-        author_permission: ['Leer y Editar',  Validators.required] // 🔥 Deshabilitado porque es fijo
+        author_permission: ['Leer y Editar', Validators.required]
       })
+    });
+
+    this.postForm.get('title')?.statusChanges.subscribe(() => {
+      const titleControl = this.postForm.get('title');
+      if (titleControl?.invalid && (titleControl?.dirty || titleControl?.touched)) {
+        this.titleError = "El título es obligatorio.";
+      } else {
+        this.titleError = "";
+      }
+    });
+
+    this.postForm.get('content')?.statusChanges.subscribe(() => {
+      const contentControl = this.postForm.get('content');
+      if (contentControl?.invalid && (contentControl?.dirty || contentControl?.touched)) {
+        this.contentError = "El contenido es obligatorio.";
+      } else {
+        this.contentError = "";
+      }
     });
   }
 
@@ -106,6 +136,19 @@ export class CreatePostComponent implements OnInit {
     });
   }
   onSubmit() {
+    if (this.postForm.invalid) {
+      this.titleError = this.postForm.get('title')?.invalid ? 'El título es obligatorio.' : null;
+      this.contentError = this.postForm.get('content')?.invalid ? 'El contenido no puede estar vacío.' : null;
+
+      Swal.fire({
+        icon: 'warning',
+        title: 'Campos Incompletos',
+        text: 'Por favor, completa todos los campos antes de continuar.',
+        confirmButtonText: 'Entendido'
+      });
+      return;
+    }
+
     if (!this.validatePermissions()) {
       Swal.fire({
         icon: 'error',
@@ -116,8 +159,9 @@ export class CreatePostComponent implements OnInit {
       return;
     }
 
-    this.crearPost(); // Solo se ejecuta si los permisos son válidos
+    this.crearPost();
   }
+
 
 
 

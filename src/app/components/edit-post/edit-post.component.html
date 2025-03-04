@@ -7,11 +7,18 @@
     <input type="text" id="title" [(ngModel)]="post.title" name="title" required />
   </div>
 
-  <!-- Contenido -->
-  <div class="form-group">
-    <label for="content">Contenido:</label>
-    <textarea id="content" [(ngModel)]="post.content" name="content" required rows="4"></textarea>
-  </div>
+<!-- Contenido -->
+<div class="form-group">
+  <label for="content">Contenido:</label>
+  <quill-editor
+    id="content"
+    [(ngModel)]="post.content"
+    [modules]="quillConfig"
+    name="content"
+    [required]="true"
+  ></quill-editor>
+</div>
+
 
   <!-- Permiso del Equipo -->
   <div class="form-group">

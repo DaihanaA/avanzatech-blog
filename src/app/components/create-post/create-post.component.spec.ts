@@ -6,6 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
+import { QuillModule } from 'ngx-quill';
+import { By } from '@angular/platform-browser';
 
 describe('CreatePostComponent', () => {
   let component: CreatePostComponent;
@@ -20,7 +22,7 @@ describe('CreatePostComponent', () => {
     authServiceMock = jasmine.createSpyObj('AuthService', ['login', 'getCurrentUser']);
 
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, CreatePostComponent],
+      imports: [ReactiveFormsModule, CreatePostComponent, QuillModule],
       declarations: [],
       providers: [
         { provide: PostService, useValue: postServiceMock },
@@ -185,4 +187,43 @@ describe('CreatePostComponent', () => {
       }
     });
   }));
+
+  it('🔴 debe deshabilitar el botón si el formulario es inválido', () => {
+    const button = fixture.debugElement.query(By.css('button[type="submit"]')).nativeElement;
+    expect(button.disabled).toBeTrue();
+  });
+
+  it('⚠️ debe mostrar mensaje de error si el título está vacío y fue tocado', () => {
+    const titleControl = component.postForm.get('title');
+    titleControl?.markAsTouched();  // Simula que el usuario tocó el input
+    fixture.detectChanges();
+
+    const errorMessage = fixture.debugElement.query(By.css('.error-message'));
+    expect(errorMessage).toBeTruthy();
+    expect(errorMessage.nativeElement.textContent).toContain('El título es obligatorio');
+  });
+
+  it('📝 debe inicializar correctamente el editor Quill', () => {
+    const quillEditor = fixture.debugElement.query(By.css('quill-editor'));
+    expect(quillEditor).toBeTruthy();
+  });
+
+  it('✅ debe habilitar el botón cuando el formulario es válido', () => {
+    component.postForm.patchValue({
+      title: 'Mi primer post',
+      content: '<p>Contenido del post</p>',
+      categorias: {
+        public_permission: 'READ',
+        authenticated_permission: 'READ',
+        team_permission: 'READ',
+        author_permission: 'Autor',
+      }
+    });
+
+    fixture.detectChanges();
+
+    const button = fixture.debugElement.query(By.css('button[type="submit"]')).nativeElement;
+    expect(button.disabled).toBeFalse();
+  });
 });
+

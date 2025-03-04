@@ -89,7 +89,7 @@ export class PostDetailComponent implements OnInit {
 
     this.postService.addComment(this.post.id, this.newComment).subscribe({
       next: (newComment) => {
-        this.comments.unshift(newComment); // 🔹 Añadir comentario al inicio de la lista
+        this.comments.push(newComment); // 🔹 Añadir comentario al final de la lista
         this.newComment = ''; // Limpia el campo
         this.showAuthMessage = false; // Oculta el mensaje si ya inició sesión
       },

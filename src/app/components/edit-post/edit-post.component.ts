@@ -5,18 +5,28 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-edit-post',
   templateUrl: './edit-post.component.html',
   styleUrls: ['./edit-post.component.css'],
-  imports: [FormsModule, ReactiveFormsModule, CommonModule]
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, QuillModule]
 })
 export class EditPostComponent implements OnInit {
   post: any = {};
   originalPost: any;
   errorMessage = '';
   permissionError: string| null = ''
+  
+  quillConfig = {
+    toolbar: [
+      ['bold', 'italic', 'underline'],  // Estilos básicos
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],  // Listas
+      [{ 'align': [] }],  // Alineación
+      ['link', 'blockquote', 'code-block'],  // Extras
+    ]
+  };
 
   constructor(
     private route: ActivatedRoute,
