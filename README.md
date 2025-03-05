@@ -62,13 +62,13 @@ For more information on using the Angular CLI, including detailed command refere
 
 ## Running with Docker
 You can run this project using Docker without installing Angular or Node.js on your machine.
-###1. Build and run the container
+### 1. Build and run the container
 ```bash
 docker build -t avanzatech-blog .
 docker run -p 4200:80 avanzatech-blog
 ```
 
-###2. Using Docker Compose (Optional)
+### 2. Using Docker Compose (Optional)
 If you have Docker Compose installed, you can simplify the process:
 ```bash
 docker compose up --build
