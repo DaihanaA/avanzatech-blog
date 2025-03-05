@@ -67,6 +67,7 @@ You can run this project using Docker without installing Angular or Node.js on y
 docker build -t avanzatech-blog .
 docker run -p 4200:80 avanzatech-blog
 ```
+Then, open http://localhost:4200/ in your browser.
 
 ### 2. Using Docker Compose (Optional)
 If you have Docker Compose installed, you can simplify the process:
